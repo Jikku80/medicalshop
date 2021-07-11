@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Checkout" %}{% endblock %}
+
+{% block content %}
+
+<h1 class="alert" id="catid" role="alert">{% trans "Checkout" %}</h1>
+
+<div class="row">
+    <div class="col-sm-4 offset-1 shadow">
+        <form method="post" class="order-form text-white">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" class="btn btn-success" value="{% trans 'Place Order' %}">
+        </form>
+    </div>
+    <div class="card bg-dark text-white col-sm-4 offset-1">
+        <h1 class='alert alert-warning text-center' role='alert'>{% trans 'Your Order' %}</h1>
+        <ul>
+            {% for item in cart %}
+            <li>
+                {{ item.quantity }} x {{ item.product.name }}
+                <span class="mx-5">{% trans "Rs" %}. {{ item.total_price|floatformat:2 }}</span>
+            </li>
+            {% endfor %}
+            {% if cart.coupon %}
+            <li>
+                "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% {% trans "off" %})
+                <span class="mx-4"> - {% trans "Rs" %}. {{ cart.get_discount|floatformat:2 }}</span>
+            </li>
+            {% endif %}
+        </ul>
+        <p class="alert alert-success text-center" role="alert">{% trans "Total" %}:
+            {% trans "Rs" %}.{{ cart.get_total_price_after_discount }}</p>
+    </div>
+</div>
+
+{% endblock %}

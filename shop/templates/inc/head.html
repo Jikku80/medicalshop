@@ -1,0 +1,31 @@
+{% load static %}
+{% load i18n %}
+
+<span class="col-sm-4" id="header">
+    <a href="{% url 'shop:product_list' %}" class="badge text-wrap" id='mshop'>{% trans "My Shop" %}</a>
+</span>
+
+{% with total_items=cart|length %}
+
+
+<span class="cart col-sm-4">
+    <a href="{% url 'cart:cart_detail' %}" class="tot">
+        <img src="{% static 'image/cart.png' %}" />
+    </a>
+    {% if total_items > 0 %}
+    <span class="badge rounded-pill bg-danger" id="noty">{{ total_items }}</span>
+    {% else %}
+    <span class="badge rounded-pill bg-warning text-dark" id="noty">´ཀ`</span>
+    {% endif %}
+</span>
+<span id="empt" class="alert text-warning text-center" role="alert">
+    <span class="hide">
+        {% if total_items > 0 %}
+        {% trans "Rs" %}.{{ cart.get_total_price }}
+
+        {% else %}
+        {% trans "Your Cart is EMPTY!!!!" %}
+        {% endif %}
+    </span>
+    {% endwith %}
+</span>

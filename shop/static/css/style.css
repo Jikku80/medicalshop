@@ -1,0 +1,122 @@
+body{
+    overflow-x: hidden;
+    background-color: #212529;
+ }
+
+a{
+    text-decoration: none;
+    color: rgb(226, 150, 163);
+}
+
+a:hover, a:active{
+    color:rgba(219, 0, 0, 0.5);
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#header{
+    margin-left: 20px; 
+    margin-top: 30px;
+    font-family: cursive;
+    position: sticky;
+    top: 20px;
+    z-index: 1;
+}
+
+#mshop{
+    text-decoration: none;
+    width: 4rem;
+    height: 3rem;
+    padding-top: 10px;
+    background-color: darkslategray;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    
+}
+
+#catid{
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    background-color: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    color:rgb(226, 150, 163);
+    font-family: cursive;
+    font-size: 25px;
+    width: 200px;
+    height: 60px;
+    margin-top: 9px;
+    margin-left: 20px;
+}
+
+.alert:hover, #mshop:hover{
+    color: rgb(104, 103, 109);
+    box-shadow: none; 
+}
+
+#empt {
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    background-color: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    font-family: cursive;
+    width: 300px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 500px;
+    position: sticky;
+    top: 50px;
+    z-index: 1;
+    display: none;
+}
+
+.cart {
+    width: 400px;
+    height: 10px;
+    position: sticky;
+    top:5px;
+    margin-top: 5px;
+    margin-left: 535px;
+    z-index: 1;
+}
+
+#leftcol{
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5); 
+}
+
+#smll{
+    font-weight: .75em;
+}
+
+#detailcard{
+    margin-top: 0;
+    margin-left: 400px;
+
+}
+
+.card{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: cursive; 
+}
+
+table{
+    margin-top: 15px;
+}
+
+.tabcard img{
+    height: 100px;
+}
+
+.form-control{
+    background-color:#212529;
+}
+
+.rounded-pill{
+    width: auto;
+    min-width: 18px;
+    padding: 4px;
+}
+
+.cart:hover + #empt {
+    display: block;
+}
+

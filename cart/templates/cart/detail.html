@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans "Cart" %}{% endblock %}
+
+{% block content %}
+
+<table class="table table-dark table-hover" id='cart'>
+    <thead>
+        <tr>
+            <th scope="col">{% trans "Image" %}</th>
+            <th scope="col">{% trans "Product" %}</th>
+            <th scope="col">{% trans "Quantity" %}</th>
+            <th scope="col">{% trans "Remove" %}</th>
+            <th scope="col">{% trans "Unit Price" %}</th>
+            <th scope="col">{% trans "Price" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+        {% with product=item.product %}
+        <tr>
+            <td>
+                <div class="tabcard">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img
+                            src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'image/noimage.png' %} {% endif %}">
+                    </a>
+                </div>
+            </td>
+            <td>{{ product.name }}</td>
+            <td>
+                <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                    {{ item.update_quantity_form.quantity }}
+                    {{ item.update_quantity_form.override }}
+                    <input type="submit" class="btn btn-warning" value="{% trans 'Update' %}">
+                    {% csrf_token %}
+                </form>
+            </td>
+            <td>
+                <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                    <input type="submit" class="btn btn-danger" value="{% trans 'Remove' %}">
+                    {% csrf_token %}
+                </form>
+            </td>
+            <td class="num">{%trans "Rs" %}.{{ item.price }}</td>
+            <td class="num">{%trans "Rs" %}.{{ item.total_price }}</td>
+        </tr>
+        {% endwith %}
+        {% endfor %}
+        {% if cart.coupon %}
+        <tr class="subtotal">
+            <td>{% trans "Subtotal" %}</td>
+            <td colspan="4"></td>
+            <td class="num">{%trans "Rs" %}.{{ cart.get_total_price|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td>
+                "{{ cart.coupon.code }}" {% trans "Coupon" %}
+                ({{ cart.coupon.discount }}% {% trans "off" %})
+            </td>
+            <td colspan="4"></td>
+            <td class="num neg"> - {%trans "Rs" %}.{{ cart.get_discount|floatformat:2 }}</td>
+        </tr>
+        {% endif %}
+        <tr class="total">
+            <td>{% trans 'total' %}</td>
+            <td colspan="4"></td>
+            <td class="num">{% trans "Rs" %}.{{ cart.get_total_price_after_discount|floatformat:2 }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<span class="card text-center" style="width: 18rem; margin-left: 540px;">
+    <div class="card-body">
+        <h5 class="card-title fw-bold">{% trans "Apply Coupon" %}</h5>
+        <form action="{% url 'coupons:apply' %}" method="post">
+            {{ coupon_apply_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Apply' %}" class="btn btn-primary">
+        </form>
+        <br>
+        <small class="card-subtitle mb-2 text-muted">{%  trans "Pick One" %}</small>
+        <hr>
+        <a href="{% url 'shop:product_list' %}" class="btn btn-success">{% trans "Shop More" %}</a>
+        <a href="{% url 'orders:order_create' %}" class="btn btn-warning">{% trans "Checkout" %}</a>
+
+    </div>
+</span>
+
+
+{% endblock %}
